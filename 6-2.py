@@ -41,13 +41,13 @@ def south(location: tuple): return (location[0], location[1] + 1)
 def east(location: tuple): return (location[0] + 1, location[1])
 def west(location: tuple): return (location[0] - 1, location[1])
 def inbounds(location: tuple):  
-     if location[0] in range(0,size[0]) and location[1] in range(0,size[1]): return True 
+     if 0 <= location[0] <= size[0] and 0 <= location[1] <= size[1]: return True 
 
 
 with open('AoC 2024/Input/Day6Data.txt') as file:
     file = file.read().splitlines()
     size = (len(file[0]),len(file))
-    obstacles = []
+    obstacles = set()
     visited = set()
     loops = 0
 
@@ -55,13 +55,12 @@ with open('AoC 2024/Input/Day6Data.txt') as file:
         if "^" in line: 
             guard = Guard((line.find("^"), y), Direction.N)
             guard.visit(guard.location, guard.location)
-        obstacles += [(x,y) for x, letter in enumerate(line) if letter == "#"]
+        obstacles.update({(x,y) for x, letter in enumerate(line) if letter == "#"})
     
     while guard.onpatrol:
         visited.add(guard.location)
         loc = guard.walk()
-        if loc in obstacles:
-            guard.rotate()
+        if loc in obstacles: guard.rotate()
         else: guard.location = loc
 
         if not(inbounds(guard.location)): guard.onpatrol = False
@@ -69,7 +68,7 @@ with open('AoC 2024/Input/Day6Data.txt') as file:
     visited.remove(guard.start)
     for possibility in visited:
         newobs = obstacles.copy()
-        newobs.append(possibility)
+        newobs.add(possibility)
         
         guard = Guard(guard.start, Direction.N)
         isloop = False
