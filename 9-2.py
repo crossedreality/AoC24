@@ -74,4 +74,3 @@ for file in files:
         checksum += (block.position * block.ID)
 
 print(checksum)
-spaces.sort(key=lambda f: f.position)
