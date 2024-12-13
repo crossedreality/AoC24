@@ -9,10 +9,6 @@ class Direction(Enum):
      S = 4
      W = 6
 
-class Corner:
-    def __init__(self, edge: Direction):
-        pass
-
 class Plot:
     def __init__(self, label: str, location: tuple):
         self.label = label
