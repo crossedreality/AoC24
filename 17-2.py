@@ -1,5 +1,3 @@
-from enum import Enum
-
 def Decompiled(a: int) -> list: #This makes it work only for my input; maybe I'll actually write a generalized version later.
     b = 0
     c = 0
